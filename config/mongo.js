@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 export async function init() {
     try {
-       await mongoose.connect(process.env.MONGO_URI);
-       console.log("Database Connected");
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("Database Connected");
     } catch (error) {
         if (error) {
             console.log(error);
@@ -13,17 +13,20 @@ export async function init() {
 }
 
 const Schema = mongoose.Schema;
-const persons = new Schema({
-    day: Number,
-    name:String,
-    year:Number,
-    month: String,
-    desc: String,
-    wiki:String
-},{timestamps:true});
+const persons = new Schema(
+    {
+        day: Number,
+        name: String,
+        year: Number,
+        month: String,
+        desc: String,
+        wiki: String
+    },
+    { timestamps: true }
+);
 
-const firstPartModel = mongoose.model("firstpart",persons);
-const secondPartModel = mongoose.model("secondpart",persons);
+const firstPartModel = mongoose.model("firstpart", persons);
+const secondPartModel = mongoose.model("secondpart", persons);
 
 const monthNumberMapping = {
     january: 0,
