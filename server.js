@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import { rateLimit } from "express-rate-limit";
 
 //local import
 import { init } from "./config/mongo.js";
@@ -15,6 +16,14 @@ init();
 //cache init
 cacheInit();
 
+//rate limit setup
+const apiLimiter = rateLimit({
+	windowMs: 1000, // 1 second
+	max: 1, // Limit each IP to 100 requests per `window` (here, per 1 second)
+	standardHeaders: 'draft-7', // Set `RateLimit` and `RateLimit-Policy`` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
 //initialize express
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,4 +33,4 @@ app.listen(PORT, host, () => {
 });
 
 //api for birthday
-app.use("/api/v1", router);
+app.use("/api/v1",apiLimiter,router);
