@@ -25,3 +25,5 @@ app.listen(PORT, host, () => {
 
 //api for birthday
 app.use("/api/v1", router);
+
+export default app;
